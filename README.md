@@ -44,7 +44,7 @@ Each plugin is completely isolated with its own agents, commands, and skills:
 Add this marketplace to Claude Code:
 
 ```bash
-/plugin marketplace add wshobson/agents
+/plugin marketplace add TellMeAlex/agents
 ```
 
 This makes all 63 plugins available for installation, but **does not load any agents or tools** into your context.
