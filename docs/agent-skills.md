@@ -1,6 +1,6 @@
 # Agent Skills
 
-Agent Skills are modular packages that extend Claude's capabilities with specialized domain knowledge, following Anthropic's [Agent Skills Specification](https://github.com/anthropics/skills/blob/main/agent_skills_spec.md). This plugin ecosystem includes **55 specialized skills** across 15 plugins, enabling progressive disclosure and efficient token usage.
+Agent Skills are modular packages that extend Claude's capabilities with specialized domain knowledge, following Anthropic's [Agent Skills Specification](https://github.com/anthropics/skills/blob/main/agent_skills_spec.md). This plugin ecosystem includes **58 specialized skills** across 16 plugins, enabling progressive disclosure and efficient token usage.
 
 ## Overview
 
@@ -141,6 +141,14 @@ Skills provide Claude with deep expertise in specific domains without loading ev
 | Skill | Description |
 |-------|-------------|
 | **sast-configuration** | Configure Static Application Security Testing tools for vulnerability detection |
+
+### Jira Management (3 skills)
+
+| Skill | Description |
+|-------|-------------|
+| **jira-issue-operations** | Create, search, and update Jira issues with strict PPLWEBMYST validation rules |
+| **jira-relationships** | Manage issue relationships and dependencies with circular cycle prevention |
+| **jira-sprint-management** | Plan and execute sprints with capacity management and health monitoring |
 
 ## How Skills Work
 

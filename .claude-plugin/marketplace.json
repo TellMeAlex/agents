@@ -2019,6 +2019,38 @@
         "./skills/debugging-strategies",
         "./skills/monorepo-management"
       ]
+    },
+    {
+      "name": "jira-management",
+      "source": "./plugins/jira-management",
+      "description": "Jira lifecycle management for PPLWEBMYST with issue operations, relationship management, and sprint planning with complete validation and PPLWEBMYST-specific rules",
+      "version": "1.0.0",
+      "author": {
+        "name": "TellMeAlex",
+        "url": "https://github.com/TellMeAlex/agents"
+      },
+      "homepage": "https://github.com/TellMeAlex/agents",
+      "repository": "https://github.com/TellMeAlex/agents",
+      "license": "MIT",
+      "keywords": [
+        "jira",
+        "issue-management",
+        "sprint-planning",
+        "project-management",
+        "pplwebmyst",
+        "workplace-safety"
+      ],
+      "category": "project-management",
+      "strict": false,
+      "commands": [],
+      "agents": [
+        "./agents/jira-lifecycle-manager.md"
+      ],
+      "skills": [
+        "./skills/jira-issue-operations",
+        "./skills/jira-relationships",
+        "./skills/jira-sprint-management"
+      ]
     }
   ]
 }
