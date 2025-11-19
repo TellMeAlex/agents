@@ -1,11 +1,13 @@
 ---
 name: jira-issue-operations
-description: Manage Jira issue lifecycle for PPLWEBMYST project including creating new issues with validation, searching issues with JQL, updating issue fields and status transitions. Use this skill when you need to create issues (Épica, Historia, Task, Bug, etc.), search for issues by status/assignee/priority/sprint/custom fields, or modify existing issues while respecting PPLWEBMYST workflow rules and custom field requirements.
+description: Manage Jira issue lifecycle including creating new issues with validation, searching issues with JQL, updating issue fields and status transitions. Use this skill when you need to create issues (Épica, Historia, Task, Bug, etc.), search for issues by status/assignee/priority/sprint/custom fields, or modify existing issues while respecting workflow rules and custom field requirements. Configurable for any project - ask for project key if unknown.
 ---
 
 # Jira Issue Operations
 
-Manage the complete issue lifecycle for PPLWEBMYST (workplace accident management system) with validation against project-specific rules.
+Manage the complete issue lifecycle with validation against project-specific rules.
+
+**IMPORTANT**: Examples use "PPLWEBMYST" as project key. Always ask for or confirm the actual project key before operations.
 
 ## Operations Overview
 
@@ -21,35 +23,35 @@ This skill supports three core operations:
 
 To create an issue, provide:
 - **summary** (required): Issue title (1-200 chars)
-- **issuetype** (required): One of Épica, Historia, Task, Bug, Sub-task, Initiative, Spike, Strategic Theme, Design
+- **issuetype** (required): Épica, Historia, Task, Bug, Sub-task, Initiative, Spike, Strategic Theme, Design (depends on project)
 - **description** (optional): Detailed description (max 5000 chars)
-- **priority** (optional): One of A++, A+, A, B, C, D
+- **priority** (optional): Based on project configuration (e.g., A++, A+, A, B, C, D)
 
 ### Issue Type Requirements
 
 See `references/validation-rules.md` for complete requirements by type. Key rules:
 
-**Épica** - Must use "Épica" (not "Epic")
-- Requires `customfield_11762` (Epic Name) that EXACTLY matches summary
+**ÉPICA** (NOT "Epic" - use project-specific term)
+- May require customfield_11762 (Epic Name) that EXACTLY matches summary
 - Optional description
 - Can contain multiple stories
 
-**Historia** - User stories
+**HISTORIA** (User Story)
 - Required: summary
-- Template: "Como [rol] Quiero [funcionalidad] Para que [beneficio]"
+- Common template: "Como [rol] Quiero [funcionalidad] Para que [beneficio]"
 - Delivers user value
 
-**Task** - Technical tasks
+**TASK** (Technical Task)
 - Required: summary
 - Does NOT deliver direct user value
 
-**Bug** - Defects
-- Required: `customfield_10824` (Bug Environment)
-- Valid environments: "Produccion", "Pre-produccion", "Testing", "Desarrollo"
-- CRITICAL: Must be assigned to QA team
+**BUG** (Defect)
+- May require customfield_10824 (Bug Environment) or similar
+- Valid environments (example): "Produccion", "Pre-produccion", "Testing", "Desarrollo"
+- Assignment based on team process
 - Must describe: steps to reproduce, expected vs actual behavior
 
-**Sub-task**
+**SUB-TASK** (Subtask)
 - Required: parent issue key (format: PROJECT-NUMBER)
 - Required: summary
 - Cannot exist without parent
@@ -59,26 +61,26 @@ See `references/validation-rules.md` for complete requirements by type. Key rule
 Before creating, Claude validates:
 1. Issue type exists and is supported
 2. All required fields present and formatted correctly
-3. Custom field values are valid
-4. Bug environment if Bug type
-5. Epic name matches summary if Épica type
-6. Parent exists if Sub-task type
+3. Custom field values are valid (if applicable)
+4. Field constraints match project configuration
+5. Parent exists if Sub-task type
 
 Use `scripts/validate_issue_fields.py` to validate programmatically.
 
-### PPLWEBMYST-Specific Rules
+### Project-Specific Rules (Example: PPLWEBMYST)
 
-- **Bug issues**: Must assign to QA team only
-- **Corrective Actions**: Subtasks MUST have duedate set
-- **Épica linking**: Should link to Sprint (customfield_10009)
-- **Summary**: Always required, 1-200 characters
-- **Vertical Owner** (customfield_42960): Recommended for classification
+Adapt these examples to your project:
+- **Bug issues**: May require specific team assignment (e.g., QA team)
+- **Critical items**: Set appropriate due dates (e.g., Corrective Action subtasks)
+- **Epics**: May require linking to sprints (e.g., customfield_10009)
+- **Summary**: Always required, typically 1-200 characters
+- **Custom fields**: Validate based on project schema (e.g., customfield_42960 for Vertical Owner)
 
 ### Example Creation
 
 ```json
 {
-  "summary": "Implement single sign-on for accident reporting",
+  "summary": "Implement single sign-on for user authentication",
   "description": "Users need to authenticate via enterprise SSO system",
   "issuetype": {"name": "Historia"},
   "priority": {"name": "A (Muy Importante)"},
@@ -207,11 +209,11 @@ Before any status change, validate:
 2. Target state exists
 3. Transition is allowed by workflow
 
-**Valid states**: Open, Analyzing, Backlog, Ready to Start, Prioritized, In Progress, Ready to Verify, Deployed, Closed, Epic Refinement, Discarded, To deploy, Delayed
+**Valid states** (example for PPLWEBMYST): Open, Analyzing, Backlog, Ready to Start, Prioritized, In Progress, Ready to Verify, Deployed, Closed, Epic Refinement, Discarded, To deploy, Delayed
 
 ### Workflow Rules
 
-- Cannot close issue with fewer than 2 comments
+- Workflow rules vary by project (e.g., cannot close with fewer than 2 comments)
 - Some states may have conditional transitions
 - Use `get_transitions()` to see valid next states for an issue
 
@@ -278,17 +280,17 @@ else:
 
 1. **Always validate before creating**: Use the validator script
 2. **Use templates for common queries**: See JQL templates
-3. **Respect PPLWEBMYST rules**:
-   - Épica names must match summary exactly
-   - Bugs go to QA team
-   - Corrective action subtasks need duedate
+3. **Respect project-specific rules**:
+   - Validate required custom fields (e.g., Épica names, Bug environments)
+   - Follow team assignment policies (e.g., Bugs to QA)
+   - Set due dates for time-sensitive items (e.g., Corrective Actions)
 4. **Include meaningful descriptions**: Especially for bugs
-5. **Set Vertical Owner**: Helps with issue classification
-6. **Use labels and components**: Improves discoverability
+5. **Use labels and components**: Improves discoverability (e.g., Vertical Owner)
+6. **Follow naming conventions**: Consistent summaries help organization
 
 ## Limitations
 
 - Cannot delete issues (only close them)
-- Cannot bypass PPLWEBMYST validation rules
+- Must respect project-specific validation rules
 - Mass updates require explicit per-issue confirmation
-- User must have project access for operations
+- User must have appropriate project access for operations

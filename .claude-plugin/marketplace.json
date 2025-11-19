@@ -2021,9 +2021,9 @@
       ]
     },
     {
-      "name": "jira-management",
-      "source": "./plugins/jira-management",
-      "description": "Jira lifecycle management for PPLWEBMYST with issue operations, relationship management, and sprint planning with complete validation and PPLWEBMYST-specific rules",
+      "name": "workflow-orchestration",
+      "source": "./plugins/workflow-orchestration",
+      "description": "Unified workflow orchestration for development teams combining Jira project management and Git worktree coordination. Handles issue operations, relationship management, sprint planning, and parallel development workflows.",
       "version": "1.0.0",
       "author": {
         "name": "TellMeAlex",
@@ -2033,23 +2033,28 @@
       "repository": "https://github.com/TellMeAlex/agents",
       "license": "MIT",
       "keywords": [
+        "workflow-orchestration",
         "jira",
-        "issue-management",
-        "sprint-planning",
+        "git",
         "project-management",
-        "pplwebmyst",
-        "workplace-safety"
+        "agile",
+        "sprint-planning",
+        "issue-management",
+        "parallel-workflows"
       ],
-      "category": "project-management",
+      "category": "workflows",
       "strict": false,
       "commands": [],
       "agents": [
-        "./agents/jira-lifecycle-manager.md"
+        "./agents/jira-manager.md"
       ],
       "skills": [
         "./skills/jira-issue-operations",
         "./skills/jira-relationships",
-        "./skills/jira-sprint-management"
+        "./skills/jira-sprint-management",
+        "./skills/git-worktree-management",
+        "./skills/git-advanced-workflows",
+        "./skills/code-review-excellence"
       ]
     }
   ]

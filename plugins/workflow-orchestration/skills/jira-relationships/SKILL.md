@@ -1,11 +1,13 @@
 ---
 name: jira-relationships
-description: Create and manage relationships between Jira issues in PPLWEBMYST including blocking dependencies, epic composition, duplication tracking, and general associations. Use this skill when you need to link issues together (one blocks another, issues are related, duplicate issues, etc.), create epic-story relationships, or validate link operations to prevent circular dependencies and inconsistencies.
+description: Create and manage relationships between Jira issues including blocking dependencies, epic composition, duplication tracking, and general associations. Use this skill when you need to link issues together (one blocks another, issues are related, duplicate issues, etc.), create epic-story relationships, or validate link operations to prevent circular dependencies and inconsistencies. Configurable for any project - ask for project key if unknown.
 ---
 
 # Jira Issue Relationships
 
-Establish and maintain relationships between issues in PPLWEBMYST with automatic validation of dependencies and link consistency.
+Establish and maintain relationships between issues with automatic validation of dependencies and link consistency.
+
+**IMPORTANT**: Examples use "PPLWEBMYST" as project key. Always ask for or confirm the actual project key before operations.
 
 ## Link Types Overview
 
@@ -41,15 +43,15 @@ Inward: ISSUE-B "is blocked by" ISSUE-A
 
 ```json
 {
-  "outwardIssue": {"key": "PPLWEBMYST-100"},
-  "inwardIssue": {"key": "PPLWEBMYST-101"},
+  "outwardIssue": {"key": "PROJECT-100"},
+  "inwardIssue": {"key": "PROJECT-101"},
   "linkType": "Blocks"
 }
 ```
 
-Creates: **PPLWEBMYST-100 blocks PPLWEBMYST-101**
+Creates: **PROJECT-100 blocks PROJECT-101**
 
-Meaning: Feature PPLWEBMYST-101 is blocked by bug fix PPLWEBMYST-100
+Meaning: Feature PROJECT-101 is blocked by bug fix PROJECT-100
 
 ### Circular Dependency Prevention
 
